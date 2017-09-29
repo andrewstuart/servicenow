@@ -13,7 +13,15 @@ type Client struct {
 	Username, Password, Instance string
 }
 
-func (c Client) PerformFor(table, action string, opts url.Values, out interface{}) error {
+func sys(param string) string {
+	return fmt.Sprintf("sysparm_%s", param)
+}
+
+// PerformFor creates and executes an authenticated HTTP request to an
+// instance, for the given table, action and optional id, with the passed
+// options, and unmarhals the JSON into the passed output interface pointer,
+// returning an error.
+func (c Client) PerformFor(table, action, id string, opts url.Values, out interface{}) error {
 	inst := c.Instance
 
 	if !regexp.MustCompile("^https?://").MatchString(inst) {
@@ -23,12 +31,17 @@ func (c Client) PerformFor(table, action string, opts url.Values, out interface{
 	u := fmt.Sprintf("%s/%s.do", inst, table)
 
 	vals := url.Values{
-		"JSONv2":         {""},
-		"sysparm_action": {action},
+		"JSONv2":      {""},
+		sys("action"): {action},
+	}
+
+	if id != "" {
+		vals.Set(sys("sys_id"), id)
+		vals.Set("displayvalue", "true")
 	}
 
 	if opts != nil {
-		vals.Set("sysparm_query", opts.Encode())
+		vals.Set(sys("query"), opts.Encode())
 	}
 
 	req, err := http.NewRequest(http.MethodGet, u+"?"+vals.Encode(), nil)
@@ -50,14 +63,14 @@ func (c Client) PerformFor(table, action string, opts url.Values, out interface{
 
 // GetFor performs a servicenow get to the specified table, with options, and
 // unmarhals JSON into the output parameter.
-func (c Client) GetFor(table string, opts url.Values, out interface{}) error {
-	return c.PerformFor(table, "get", opts, out)
+func (c Client) GetFor(table string, id string, opts url.Values, out interface{}) error {
+	return c.PerformFor(table, "get", id, opts, out)
 }
 
 // GetRecordsFor performs a servicenow getRecords to the specified table, with
 // options, and unmarhals JSON into the output parameter.
 func (c Client) GetRecordsFor(table string, opts url.Values, out interface{}) error {
-	return c.PerformFor(table, "getRecords", opts, out)
+	return c.PerformFor(table, "getRecords", "", opts, out)
 }
 
 // GetRecords performs a servicenow getRecords to the specified table, with
