@@ -28,7 +28,7 @@ type ChangeRequest struct {
 	BackoutPlan              string      `json:"backout_plan"`
 	BusinessDuration         string      `json:"business_duration"`
 	BusinessService          string      `json:"business_service"`
-	CabDate                  string      `json:"cab_date"`
+	CabDate                  SNTime      `json:"cab_date"`
 	CabDelegate              string      `json:"cab_delegate"`
 	CabRecommendation        string      `json:"cab_recommendation"`
 	CabRequired              bool        `json:"cab_required,string"`
@@ -37,7 +37,7 @@ type ChangeRequest struct {
 	ChangePlan               string      `json:"change_plan"`
 	CloseCode                string      `json:"close_code"`
 	CloseNotes               string      `json:"close_notes"`
-	ClosedAt                 string      `json:"closed_at"`
+	ClosedAt                 SNTime      `json:"closed_at"`
 	ClosedBy                 string      `json:"closed_by"`
 	CmdbCi                   string      `json:"cmdb_ci"`
 	Comments                 string      `json:"comments"`
@@ -51,10 +51,10 @@ type ChangeRequest struct {
 	DeliveryPlan             string      `json:"delivery_plan"`
 	DeliveryTask             string      `json:"delivery_task"`
 	Description              string      `json:"description"`
-	DueDate                  string      `json:"due_date"`
-	EndDate                  string      `json:"end_date"`
+	DueDate                  SNTime      `json:"due_date"`
+	EndDate                  SNTime      `json:"end_date"`
 	Escalation               json.Number `json:"escalation"`
-	ExpectedStart            string      `json:"expected_start"`
+	ExpectedStart            SNTime      `json:"expected_start"`
 	FollowUp                 string      `json:"follow_up"`
 	GroupList                string      `json:"group_list"`
 	Impact                   json.Number `json:"impact"`
@@ -78,28 +78,28 @@ type ChangeRequest struct {
 	Reason                   string      `json:"reason"`
 	ReassignmentCount        json.Number `json:"reassignment_count"`
 	RequestedBy              string      `json:"requested_by"`
-	RequestedByDate          string      `json:"requested_by_date"`
+	RequestedByDate          SNTime      `json:"requested_by_date"`
 	ReviewComments           string      `json:"review_comments"`
-	ReviewDate               string      `json:"review_date"`
+	ReviewDate               SNTime      `json:"review_date"`
 	ReviewStatus             string      `json:"review_status"`
 	Risk                     json.Number `json:"risk"`
 	RiskImpactAnalysis       string      `json:"risk_impact_analysis"`
 	Scope                    json.Number `json:"scope"`
 	ShortDescription         string      `json:"short_description"`
 	SLADue                   string      `json:"sla_due"`
-	StartDate                string      `json:"start_date"`
+	StartDate                SNTime      `json:"start_date"`
 	State                    string      `json:"state"`
 	StdChangeProducerVersion string      `json:"std_change_producer_version"`
 	SysClassName             string      `json:"sys_class_name"`
 	SysCreatedBy             string      `json:"sys_created_by"`
-	SysCreatedOn             string      `json:"sys_created_on"`
+	SysCreatedOn             SNTime      `json:"sys_created_on"`
 	SysDomain                string      `json:"sys_domain"`
 	SysDomainPath            string      `json:"sys_domain_path"`
 	SysID                    string      `json:"sys_id"`
 	SysModCount              json.Number `json:"sys_mod_count"`
 	SysTags                  string      `json:"sys_tags"`
 	SysUpdatedBy             string      `json:"sys_updated_by"`
-	SysUpdatedOn             string      `json:"sys_updated_on"`
+	SysUpdatedOn             SNTime      `json:"sys_updated_on"`
 	TestPlan                 string      `json:"test_plan"`
 	TimeWorked               string      `json:"time_worked"`
 	Type                     string      `json:"type"`
