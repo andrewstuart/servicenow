@@ -48,14 +48,24 @@ func (c Client) PerformFor(table, action string, opts url.Values, out interface{
 	return json.NewDecoder(res.Body).Decode(out)
 }
 
+// GetFor performs a servicenow get to the specified table, with options, and
+// unmarhals JSON into the output parameter.
 func (c Client) GetFor(table string, opts url.Values, out interface{}) error {
 	return c.PerformFor(table, "get", opts, out)
 }
 
+// GetRecordsFor performs a servicenow getRecords to the specified table, with
+// options, and unmarhals JSON into the output parameter.
+func (c Client) GetRecordsFor(table string, opts url.Values, out interface{}) error {
+	return c.PerformFor(table, "getRecords", opts, out)
+}
+
+// GetRecords performs a servicenow getRecords to the specified table, with
+// options, and returns a map for each item
 func (c Client) GetRecords(table string, opts url.Values) ([]map[string]interface{}, error) {
 	var out struct {
 		Records []map[string]interface{}
 	}
-	err := c.PerformFor(table, "getRecords", opts, &out)
+	err := c.GetRecordsFor(table, opts, &out)
 	return out.Records, err
 }
