@@ -10,6 +10,7 @@ import (
 	"regexp"
 )
 
+// Err represents a possible error message that came back from the server
 type Err struct {
 	Err    string `json:"error"`
 	Reason string
@@ -59,17 +60,17 @@ func (c Client) PerformFor(table, action, id string, opts url.Values, body inter
 	}
 
 	meth := http.MethodGet
-	bdy := &bytes.Buffer{}
+	buf := &bytes.Buffer{}
 
 	if body != nil {
 		meth = http.MethodPost
-		err := json.NewEncoder(bdy).Encode(body)
+		err := json.NewEncoder(buf).Encode(body)
 		if err != nil {
 			return err
 		}
 	}
 
-	req, err := http.NewRequest(meth, u+"?"+vals.Encode(), bdy)
+	req, err := http.NewRequest(meth, u+"?"+vals.Encode(), buf)
 	if err != nil {
 		return err
 	}
@@ -87,8 +88,9 @@ func (c Client) PerformFor(table, action, id string, opts url.Values, body inter
 
 	defer res.Body.Close()
 
+	buf.Reset()
+
 	// Store JSON so we can do a preliminary error check
-	buf := &bytes.Buffer{}
 	var echeck Err
 
 	err = json.NewDecoder(io.TeeReader(res.Body, buf)).Decode(&echeck)
