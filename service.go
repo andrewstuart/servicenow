@@ -123,6 +123,8 @@ func (c Client) GetRecords(table string, opts url.Values) ([]map[string]interfac
 	return out.Records, err
 }
 
+// Insert creates a new record for the specified table, with the specified obj
+// data, and takes a destination object out for the response data.
 func (c Client) Insert(table string, obj, out interface{}) error {
 	return c.PerformFor(table, "insert", "", nil, obj, out)
 }
