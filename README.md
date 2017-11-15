@@ -253,6 +253,8 @@ options, and unmarhals JSON into the output parameter.
 ```go
 func (c Client) Insert(table string, obj, out interface{}) error
 ```
+Insert creates a new record for the specified table, with the specified obj
+data, and takes a destination object out for the response data.
 
 #### func (Client) PerformFor
 
@@ -272,6 +274,7 @@ type Err struct {
 }
 ```
 
+Err represents a possible error message that came back from the server
 
 #### func (Err) Error
 
