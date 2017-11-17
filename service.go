@@ -10,6 +10,8 @@ import (
 	"regexp"
 )
 
+var httpRE = regexp.MustCompile("^https?://")
+
 // Err represents a possible error message that came back from the server
 type Err struct {
 	Err    string `json:"error"`
@@ -36,10 +38,10 @@ func sys(param string) string {
 // for the given table, action and optional id, with the passed options, and
 // unmarhals the JSON into the passed output interface pointer, returning an
 // error.
-func (c Client) PerformFor(table, action, id string, opts url.Values, body interface{}, out interface{}) error {
+func (c *Client) PerformFor(table, action, id string, opts url.Values, body interface{}, out interface{}) error {
 	inst := c.Instance
 
-	if !regexp.MustCompile("^https?://").MatchString(inst) {
+	if !httpRE.MatchString(inst) {
 		inst = "https://" + inst
 	}
 
